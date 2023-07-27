@@ -20,42 +20,37 @@ using namespace std;
 #define ss second
 #define ff first
 
-const int MOD=998244353;
-const int N=2e5+5;
-
+const int MOD=1e7+10;
+const int N=1e7+10;
 
 int main(){
     fastIO;
-    vector<ll> pow2m(N,2);
-    pow2m[0]=1;
-    for(int i=2; i<N; i++)
-        pow2m[i]*=pow2m[i-1], pow2m[i]%=MOD;
-    int n,m; cin>>n>>m;
-    string sn, sm; cin>>sn>>sm;
-    if(n>m){
-        string ad="";
-        for(int i=0; i<n-m; i++)
-            ad+="0";
-        sm=ad+sm;
-    }
-    else{
-        string ad="";
-        for(int i=0; i<m-n; i++)
-            ad+="0";
-        sn=ad+sn; n=m;
-    }
-    int i=0, no=0;
-    ll ans=0;
-    while(i<n){
-        if(sm[i]=='1')
-            no++;
-        if(sn[i]=='1'){
-            ll var=(pow2m[n-1-i]*no)%MOD;
-            ans+=var; ans%=MOD;
+    int t; cin>>t;
+    // int t=1;
+    while(t--){
+        int n, x; cin>>n>>x;
+        string str; cin>>str;
+        int cnt0=0;
+        for(int i=0; i<n; i++)
+            if(str[i]=='0')
+                cnt0++;
+        int obal=2*cnt0-n;
+        int cbal=0, ans=0;
+        for(int i=0; i<n; i++){
+            if(obal==0){
+                if(cbal==x){
+                    ans=-1;
+                    break;
+                }
+            }
+            else if(abs(x-cbal)%abs(obal)==0 && (x-cbal)/obal>=0)
+                ans++;
+            if(str[i]=='0')
+                cbal++;
+            else cbal--;
         }
-        i++; 
+        cout<<ans<<endl;
     }
-    cout<<ans;
     return 0;
 }
 

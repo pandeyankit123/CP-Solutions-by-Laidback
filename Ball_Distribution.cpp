@@ -12,50 +12,45 @@ using namespace std;
 #define fastIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define coutall(v) for(int i=0; i<v.size(); i++) cout<<v[i]<<" "; cout<<endl;
 #define cinall(v) for(int i=0; i<v.size(); i++) cin>>v[i];
+#define fr(i,n,z) for(int i=n-1; i>=z; i--)
+#define fo(i,z,n) for(int i=z; i<n; i++)
 #define all(v) v.begin(),v.end()
 #define newl cout<<endl;
 #define ll long long
 #define pb push_back
+#define mp make_pair
 #define po pop_back
 #define ss second
 #define ff first
 
-const int MOD=998244353;
-const int N=2e5+5;
+const int MOD=1e7+10;
+const int N=1440;
 
+int findLCM(int a, int b, int c) {
+    int gcd=__gcd(a, b);
+    int lcm=(a*b)/gcd;
+    gcd=__gcd(lcm,c);
+    lcm=(lcm*c)/gcd;
+    return lcm;
+}
 
 int main(){
     fastIO;
-    vector<ll> pow2m(N,2);
-    pow2m[0]=1;
-    for(int i=2; i<N; i++)
-        pow2m[i]*=pow2m[i-1], pow2m[i]%=MOD;
-    int n,m; cin>>n>>m;
-    string sn, sm; cin>>sn>>sm;
-    if(n>m){
-        string ad="";
-        for(int i=0; i<n-m; i++)
-            ad+="0";
-        sm=ad+sm;
-    }
-    else{
-        string ad="";
-        for(int i=0; i<m-n; i++)
-            ad+="0";
-        sn=ad+sn; n=m;
-    }
-    int i=0, no=0;
-    ll ans=0;
-    while(i<n){
-        if(sm[i]=='1')
-            no++;
-        if(sn[i]=='1'){
-            ll var=(pow2m[n-1-i]*no)%MOD;
-            ans+=var; ans%=MOD;
+    int t; cin>>t;
+    // int t=1;
+    while(t--){
+        int n,m; cin>>n>>m;
+        vector<int> v(m);
+        ll sum=0;
+        fo(i,0,m) cin>>v[i], sum+=v[i];
+        int mn=sum/n;
+        if(mn==m) cout<<n<<endl;
+        else if(mn==m-1){
+            if(sum%n) cout<<sum%n<<endl;
+            else cout<<0<<endl;
         }
-        i++; 
+        else cout<<0<<endl;
     }
-    cout<<ans;
     return 0;
 }
 

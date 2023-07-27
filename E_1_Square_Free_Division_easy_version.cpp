@@ -16,7 +16,7 @@ using namespace std;
 #define newl cout<<endl;
 #define ll long long
 #define pb push_back
-#define po pop_back
+#define po pop_backw
 #define ss second
 #define ff first
 

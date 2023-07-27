@@ -20,46 +20,44 @@ using namespace std;
 #define ss second
 #define ff first
 
-const int MOD=998244353;
-const int N=2e5+5;
-
+const int MOD=1e7+10;
+const int N=1e7+10;
 
 int main(){
     fastIO;
-    vector<ll> pow2m(N,2);
-    pow2m[0]=1;
-    for(int i=2; i<N; i++)
-        pow2m[i]*=pow2m[i-1], pow2m[i]%=MOD;
-    int n,m; cin>>n>>m;
-    string sn, sm; cin>>sn>>sm;
-    if(n>m){
-        string ad="";
-        for(int i=0; i<n-m; i++)
-            ad+="0";
-        sm=ad+sm;
-    }
-    else{
-        string ad="";
-        for(int i=0; i<m-n; i++)
-            ad+="0";
-        sn=ad+sn; n=m;
-    }
-    int i=0, no=0;
-    ll ans=0;
-    while(i<n){
-        if(sm[i]=='1')
-            no++;
-        if(sn[i]=='1'){
-            ll var=(pow2m[n-1-i]*no)%MOD;
-            ans+=var; ans%=MOD;
+    // int t; cin>>t;
+    int t=1;
+    while(t--){
+        int n,w; cin>>n>>w;
+        int ex=0, in=0;
+        for(int i=0; i<n; i++){
+            int c; cin>>c;
+            if(c>=0){
+                in+=c;
+                if(ex==0)
+                    w-=c;
+                else{
+                    if(c>=ex)
+                        c-=ex, ex=0, w-=c;
+                    else
+                        ex-=c;
+                }
+            }
+            else{
+                if(abs(c)>in)
+                    w-=(abs(c)-in), in=0;
+                else in-=abs(c);
+                ex+=abs(c);
+            }
         }
-        i++; 
+        if(w+1>=0)
+            cout<<w+1;
+        else cout<<0;   
     }
-    cout<<ans;
     return 0;
 }
 
 
 /*
-    
+
 */

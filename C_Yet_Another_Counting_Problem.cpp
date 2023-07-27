@@ -20,42 +20,36 @@ using namespace std;
 #define ss second
 #define ff first
 
-const int MOD=998244353;
-const int N=2e5+5;
+const int MOD=1e7+10;
+const int N=1e7+10;
 
+ll findx(ll ind, vector<ll> pre){
+    ll n=ind/pre.size();
+    ll rem=ind%pre.size();
+    return n*pre[pre.size()-1] + pre[rem];
+}
 
 int main(){
     fastIO;
-    vector<ll> pow2m(N,2);
-    pow2m[0]=1;
-    for(int i=2; i<N; i++)
-        pow2m[i]*=pow2m[i-1], pow2m[i]%=MOD;
-    int n,m; cin>>n>>m;
-    string sn, sm; cin>>sn>>sm;
-    if(n>m){
-        string ad="";
-        for(int i=0; i<n-m; i++)
-            ad+="0";
-        sm=ad+sm;
-    }
-    else{
-        string ad="";
-        for(int i=0; i<m-n; i++)
-            ad+="0";
-        sn=ad+sn; n=m;
-    }
-    int i=0, no=0;
-    ll ans=0;
-    while(i<n){
-        if(sm[i]=='1')
-            no++;
-        if(sn[i]=='1'){
-            ll var=(pow2m[n-1-i]*no)%MOD;
-            ans+=var; ans%=MOD;
+    int t; cin>>t;
+    // int t=1;
+    while(t--){
+        int a,b,q; cin>>a>>b>>q;
+        vector<ll> pre(a*b, 0);
+        for(int i=1; i<a*b; i++){
+            pre[i]=pre[i-1];
+            if(((i%a)%b)!=((i%b)%a))
+                pre[i]++;
         }
-        i++; 
+        while(q--){
+            ll l,r; cin>>l>>r;
+            ll left=findx(l-1, pre);
+            ll right=findx(r, pre);
+            ll ans=right-left;
+            cout<<ans<<" ";
+        }
+        cout<<endl;
     }
-    cout<<ans;
     return 0;
 }
 

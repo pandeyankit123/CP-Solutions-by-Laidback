@@ -20,42 +20,35 @@ using namespace std;
 #define ss second
 #define ff first
 
-const int MOD=998244353;
-const int N=2e5+5;
+const int MOD=1e7+10;
+const int N=1e7+10;
 
+int factor(int n){
+    int ans=0;
+    for(int i=2; i*i<=n; i++){
+        while(n%i==0){
+            ans++;
+            n/=i;
+        }
+    }
+    if(n!=1)
+        ans++;
+    return ans;
+}
 
 int main(){
     fastIO;
-    vector<ll> pow2m(N,2);
-    pow2m[0]=1;
-    for(int i=2; i<N; i++)
-        pow2m[i]*=pow2m[i-1], pow2m[i]%=MOD;
-    int n,m; cin>>n>>m;
-    string sn, sm; cin>>sn>>sm;
-    if(n>m){
-        string ad="";
-        for(int i=0; i<n-m; i++)
-            ad+="0";
-        sm=ad+sm;
+    int t; cin>>t;
+    // int t=1;
+    while(t--){
+        int a,b,k;
+        cin>>a>>b>>k;
+        if(k==1 && a!=b && (a%b==0 || b%a==0))
+            cout<<"YES"<<endl;
+        else if(k!=1 && k<=(factor(a)+factor(b)))
+            cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
     }
-    else{
-        string ad="";
-        for(int i=0; i<m-n; i++)
-            ad+="0";
-        sn=ad+sn; n=m;
-    }
-    int i=0, no=0;
-    ll ans=0;
-    while(i<n){
-        if(sm[i]=='1')
-            no++;
-        if(sn[i]=='1'){
-            ll var=(pow2m[n-1-i]*no)%MOD;
-            ans+=var; ans%=MOD;
-        }
-        i++; 
-    }
-    cout<<ans;
     return 0;
 }
 
